@@ -1,6 +1,6 @@
 Reporducable Research Peer Assignment
 ========================================================
-
+ 
 
 ## Loading and Transforming the data for our analysis
 
@@ -9,10 +9,18 @@ First download the the source data file and then load it using the read.csv
 ```r
 fileurl <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"
 download.file(fileurl, dest = "activity.zip", method = "curl")
+```
+
+```
+## Warning: running command 'curl  "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"  -o "activity.zip"' had status 127
+## Warning: download had nonzero exit status
+```
+
+```r
 Data <- read.csv(unz("activity.zip", "activity.csv"))
 ```
 
-
+ 
 Now in the next step we'll preprocess the data for our analysis as follow:
 
 Combine the date and time to form a timestamp

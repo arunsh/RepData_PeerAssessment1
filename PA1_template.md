@@ -12,8 +12,8 @@ download.file(fileurl, dest = "activity.zip", method = "curl")
 ```
 
 ```
-## Warning: running command 'curl  "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"  -o "activity.zip"' had status 127
-## Warning: download had nonzero exit status
+## Warning in download.file(fileurl, dest = "activity.zip", method = "curl"):
+## download had nonzero exit status
 ```
 
 ```r
@@ -67,7 +67,7 @@ hist(DailySteps$Steps,
      col="red")
 ```
 
-![plot of chunk PlotHist](figure/PlotHist.png) 
+![plot of chunk PlotHist](figure/PlotHist-1.png) 
 
 Also to calculate and report the mean and median total number of steps taken per day:
 
@@ -77,7 +77,7 @@ summary(DailySteps$Steps)
 
 ```
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##       0    6780   10400    9350   12800   21200
+##       0    6778   10400    9354   12810   21190
 ```
 
 
@@ -107,7 +107,7 @@ title(main="Time-series plot for avg steps per 5 mins in a day", col.main="red",
       col.lab="red")
 ```
 
-![plot of chunk PlotDailyActivity](figure/PlotDailyActivity.png) 
+![plot of chunk PlotDailyActivity](figure/PlotDailyActivity-1.png) 
 
 To calculate 5-minute interval, on average across all the days in the dataset, 
 contains the maximum number of steps:
@@ -181,7 +181,7 @@ hist(DailyStepsN$Steps,
      col="red")
 ```
 
-![plot of chunk NewDataHist](figure/NewDataHist.png) 
+![plot of chunk NewDataHist](figure/NewDataHist-1.png) 
 
 Also follwing is the summary for the new data having all the missing steps information:
 
@@ -192,15 +192,26 @@ summary(DailyStepsN$Steps)
 
 ```
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   11800 2830000 3060000 3100000 3690000 6100000
+##   11810 2828000 3065000 3096000 3690000 6104000
 ```
 
-So we can see that for old data with missing values its mean is ```{r echo=FALSE} summary(DailySteps$Steps)[4] ``` and for new data with all the predicted values for steps its mean is ```{r echo=FALSE} summary(DailyStepsN$Steps)[4]```.
+So we can see that for old data with missing values its mean is as below
 
-So we can coclude that with all the missing values its mean steps taken increases, as it was expected, and so does its median descreases, as a lot of the predicted missing values are less than its mean and so it shits to the left side as in the histogram.
+```
+## Mean 
+## 9354
+```
+and for new data with all the predicted values for steps its mean is:
+
+```
+##    Mean 
+## 3096000
+```
+
+So we can conclude that with all the missing values its mean steps taken increases, as it was expected, and so does its median descreases, as a lot of the predicted missing values are less than its mean and so it shifts to the left side as in the histogram.
 
 
-##Are there differences in activity patterns between weekdays and weekends?
+## Now to answer the next question "Are there differences in activity patterns between weekdays and weekends?"
 
 For this first we'll create a new factor variable in our new Dataset for representing if a day is weekday or weekend.
 
@@ -228,17 +239,18 @@ Now plot the data for weekend and weekday steps activites averaged over all the 
 
 ```r
 par(mfrow=c(2,1))
-plot(as.numeric(names(StepsPerIntervalWeekday)), StepsPerIntervalWeekday, 
+plot(strptime(as.numeric(names(StepsPerIntervalWeekday)), format='%H%M'), StepsPerIntervalWeekday, 
      type='l',main="Weekday", col.main="red", 
      xlab="5 min time interval", ylab="Avg number of steps",
      col.lab="red")
 
-plot(as.numeric(names(StepsPerIntervalWeekend)), StepsPerIntervalWeekend, 
+plot(strptime(as.numeric(names(StepsPerIntervalWeekend)), format='%H%M'), StepsPerIntervalWeekend, 
      type='l',main="Weekend", col.main="red", 
      xlab="5 min time interval", ylab="Avg number of steps",
      col.lab="red")
 ```
 
-![plot of chunk plotWeekendWeekdayData](figure/plotWeekendWeekdayData.png) 
+![plot of chunk plotWeekendWeekdayData](figure/plotWeekendWeekdayData-1.png) 
 
 
+So from the above plots we can clearly see that during weekends people are more active in walking during day time. As we can assume that people may go for outing during weekend. So above data and plots clearly shows that more peoples are active during weekend in activites resulting in more number of steps.
